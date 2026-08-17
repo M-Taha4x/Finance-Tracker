@@ -1,5 +1,6 @@
 import streamlit as st 
 import db
+import io
 
 st.title("Personal Finance Tracker")
 st.subheader("Accounts")
@@ -50,3 +51,8 @@ if len(data_range)==2:
     start,end=data_range
     filtered=filtered[(filtered['date'] >= str(start)) & (filtered['date'] <= str(end))]
 st.dataframe(filtered)
+csv_data=filtered.to_csv(index=False)
+st.download_button("Download as CSV",data=csv_data,file_name='transaction.csv',mime='text/csv')
+buffer=io.BytesIO()
+filtered.to_excel(buffer,index=False,engine='openpyxl')
+st.download_button("Download as Excel",data=buffer.getvalue(),file_name='transactions.xlsx',mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
