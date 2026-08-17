@@ -30,4 +30,23 @@ with st.form("add_transaction_form"):
     
         db.insert_transaction(str(date), account_id, amount, type_, category_id, note)
         st.success("Transaction Added!")
-        
+st.subheader("Recent Transaction")
+col1,col2,col3=st.columns(3)
+with col1:
+    data_range=st.date_input("Date Range: ",value=[])
+with col2:
+    selected_accounts=st.multiselect("Accounts ",account_df['name'])
+with col3:
+    selected_categories=st.multiselect("Categories",categories_df['name'])
+all_transactions=db.get_all_transactions()
+filtered=all_transactions.copy()
+if selected_accounts:
+    selected_account_id=account_df[account_df['name'].isin(selected_accounts)]['account_id']
+    filtered=filtered[filtered['account_id'].isin(selected_account_id)]
+if selected_categories:
+    selected_category_id=categories_df[categories_df['name'].isin(selected_categories)]['category_id']
+    filtered=filtered[filtered['category_id'].isin(selected_category_id)]
+if len(data_range)==2:
+    start,end=data_range
+    filtered=filtered[(filtered['date'] >= str(start)) & (filtered['date'] <= str(end))]
+st.dataframe(filtered)
