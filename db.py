@@ -64,3 +64,17 @@ def get_balance(account_id):
     total_balance=starting_balance+total_spent
     conn.close()
     return total_balance
+def get_spend_by_category():
+    conn = get_conection()
+    df = pd.read_sql("""
+        SELECT 
+            c.name AS category_name,
+            SUM(t.amount) AS total_spent
+        FROM transactions t
+        JOIN categories c ON t.category_id = c.category_id
+        WHERE t.type = 'spend'
+        GROUP BY c.name
+        ORDER BY total_spent
+    """, conn)
+    conn.close()
+    return df
