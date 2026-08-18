@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-
+import os
 
 db_path=r"database/finance.db"
 def create_tables():
@@ -44,7 +44,8 @@ def seed_accounts_and_categories():
         conn.commit()
     conn.close()
 def get_conection():
-    conn=sqlite3.connect(db_path)
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    conn = sqlite3.connect(db_path)
     conn.execute("PRAGMA foreign_keys=ON")
     return conn
 def get_all_transactions():
