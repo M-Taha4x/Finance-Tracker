@@ -1,6 +1,8 @@
 import streamlit as st 
 import db
 import io
+db.create_tables()
+db.seed_accounts_and_categories()
 st.set_page_config(page_title="My Finance Tracker", page_icon="💰", layout="wide")
 def check_password():
     def password_entered():
