@@ -37,11 +37,17 @@ def seed_accounts_and_categories():
     conn = get_conection()
     existing = pd.read_sql("SELECT COUNT(*) as c FROM accounts", conn)
     if existing['c'].iloc[0] == 0:
-        accounts = [("Wallet", 720), ("Meezan Bank", 751.78), ("EasyPaisa", 0), ("JazzCash", 0), ("Sadapay", 0), ("NayaPay", 0)]
+        accounts = [("Wallet", 920), ("Meezan Bank", 5415.02), ("EasyPaisa", 0), ("JazzCash", 0), ("Sadapay", 0), ("NayaPay", 0)]
         conn.executemany("INSERT INTO accounts (name, starting_balance) VALUES (?, ?)", accounts)
         categories = ["HangOut","Lunch","Dinner","Essentials","Transport","Turf","Snacks","Donation","Subscription","Loan","Pocket Money","Other"]
         conn.executemany("INSERT INTO categories (name) VALUES (?)", [(c,) for c in categories])
         conn.commit()
+    conn.close()
+def reset_accounts(new_accounts):
+    conn = get_conection()
+    conn.execute("DELETE FROM accounts")
+    conn.executemany("INSERT INTO accounts (name, starting_balance) VALUES (?, ?)", new_accounts)
+    conn.commit()
     conn.close()
 def get_conection():
     os.makedirs(os.path.dirname(db_path), exist_ok=True)

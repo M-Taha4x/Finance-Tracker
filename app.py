@@ -3,6 +3,7 @@ import db
 import io
 db.create_tables()
 db.seed_accounts_and_categories()
+db.reset_accounts([("Wallet", 920), ("Meezan Bank", 5415.02), ("EasyPaisa", 0), ("JazzCash", 0), ("Sadapay", 0), ("NayaPay", 0)])
 st.set_page_config(page_title="My Finance Tracker", page_icon="💰", layout="wide")
 def check_password():
     def password_entered():
