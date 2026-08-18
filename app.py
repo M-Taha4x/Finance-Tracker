@@ -1,6 +1,7 @@
 import streamlit as st 
 import db
 import io
+
 def check_password():
     def password_entered():
         if st.session_state['password']==st.secrets['app_password']:
@@ -9,7 +10,7 @@ def check_password():
         else:
             st.session_state['password_correct']=False
     
-    if "password_corect" not in st.session_state:
+    if "password_correct" not in st.session_state:
         st.text_input("Password",type="password",on_change=password_entered,key='password')        
         return False
     elif not st.session_state['password_correct']:
@@ -18,6 +19,7 @@ def check_password():
         return False
     else:
         return True
+    
 if not check_password():
     st.stop()
 
