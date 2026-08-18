@@ -1,7 +1,7 @@
 import streamlit as st 
 import db
 import io
-
+st.set_page_config(page_title="My Finance Tracker", page_icon="💰", layout="wide")
 def check_password():
     def password_entered():
         if st.session_state['password']==st.secrets['app_password']:
@@ -80,6 +80,10 @@ with tab3:
         filtered=filtered[(filtered['date'] >= str(start)) & (filtered['date'] <= str(end))]
     st.dataframe(filtered)
     csv_data=filtered.to_csv(index=False)
+    st.subheader("Spend by Category")
+    spend_df = db.get_spend_by_category()
+    spend_df['total_spent'] = spend_df['total_spent'].abs()  # flip negative to positive for display
+    st.bar_chart(spend_df.set_index('category_name')['total_spent'])
     col3,col4=st.columns(2)
     with col3:
         st.subheader("Download as CSV")
@@ -89,3 +93,7 @@ with tab3:
         buffer=io.BytesIO()
         filtered.to_excel(buffer,index=False,engine='openpyxl')
         st.download_button("Download as Excel",data=buffer.getvalue(),file_name='transactions.xlsx',mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    
+with tab4:
+    st.subheader("About Me")
+    st.write("5th Sem AI Student")
