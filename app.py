@@ -96,7 +96,16 @@ with tab3:
         buffer=io.BytesIO()
         filtered.to_excel(buffer,index=False,engine='openpyxl')
         st.download_button("Download as Excel",data=buffer.getvalue(),file_name='transactions.xlsx',mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    
+    st.subheader("Delete a Transaction")
+    transaction_id_to_delete = st.number_input("Transaction ID to delete", min_value=1, step=1)
+    confirm = st.checkbox("I'm sure I want to delete this transaction")
+
+    if st.button("Delete Transaction"):
+        if confirm:
+            db.delete_transaction(int(transaction_id_to_delete))
+            st.success(f"Transaction {transaction_id_to_delete} deleted.")
+        else:
+            st.warning("Please check the confirmation box first.") 
 with tab4:
     st.subheader("About Me")
     st.write("5th Sem AI Student")

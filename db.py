@@ -124,3 +124,8 @@ def get_spend_by_category():
     """, conn)
     conn.close()
     return df
+def delete_transaction(transaction_id):
+    conn = get_conection()
+    conn.execute("DELETE FROM transactions WHERE transaction_id = ?", (transaction_id,))
+    conn.commit()
+    conn.close()
