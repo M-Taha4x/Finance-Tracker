@@ -10,7 +10,19 @@ def get_conection():
     return conn
 def get_all_transactions():
     conn=get_conection()
-    df=pd.read_sql("SELECT * FROM transactions ORDER BY date DESC",conn)
+    df=pd.read_sql(""" 
+            SELECT 
+            t.transaction_id,
+            t.date,
+            a.name AS account_name,
+            t.amount,
+            t.type,
+            c.name AS category_name,
+            t.note
+        FROM transactions t
+        JOIN accounts a ON t.account_id = a.account_id
+        LEFT JOIN categories c ON t.category_id = c.category_id
+        ORDER BY t.date DESC""",conn)
     conn.close()
     return df
 def insert_transaction(date,account_id,amount,type_,category_id,note):
