@@ -3,7 +3,46 @@ import pandas as pd
 
 
 db_path=r"database/finance.db"
-
+def create_tables():
+    conn = get_conection()
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS accounts (
+            account_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            starting_balance REAL NOT NULL DEFAULT 0
+        )
+    """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS categories (
+            category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL
+        )
+    """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS transactions (
+            transaction_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date TEXT NOT NULL,
+            account_id INTEGER NOT NULL,
+            amount REAL NOT NULL,
+            type TEXT NOT NULL,
+            category_id INTEGER,
+            note TEXT,
+            FOREIGN KEY (account_id) REFERENCES accounts(account_id),
+            FOREIGN KEY (category_id) REFERENCES categories(category_id)
+        )
+    """)
+    conn.commit()
+    conn.close()
+def seed_accounts_and_categories():
+    conn = get_conection()
+    existing = pd.read_sql("SELECT COUNT(*) as c FROM accounts", conn)
+    if existing['c'].iloc[0] == 0:
+        accounts = [("Wallet", 720), ("Meezan Bank", 751.78), ("EasyPaisa", 0), ("JazzCash", 0), ("Sadapay", 0), ("NayaPay", 0)]
+        conn.executemany("INSERT INTO accounts (name, starting_balance) VALUES (?, ?)", accounts)
+        categories = ["HangOut","Lunch","Dinner","Essentials","Transport","Turf","Snacks","Donation","Subscription","Loan","Pocket Money","Other"]
+        conn.executemany("INSERT INTO categories (name) VALUES (?)", [(c,) for c in categories])
+        conn.commit()
+    conn.close()
 def get_conection():
     conn=sqlite3.connect(db_path)
     conn.execute("PRAGMA foreign_keys=ON")
