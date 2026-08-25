@@ -1,8 +1,7 @@
-import sqlite3
+import psycopg2
 import pandas as pd
-import os
+import streamlit as st
 
-db_path=r"database/finance.db"
 def create_tables():
     conn = get_conection()
     conn.execute("""
