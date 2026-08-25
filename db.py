@@ -73,6 +73,7 @@ def reset_accounts(new_accounts):
     curr.close()
     conn.close()
 
+@st.cache_data(ttl=30)
 def get_all_transactions():
     conn=get_connection()
     df=pd.read_sql(""" 
@@ -90,19 +91,22 @@ def get_all_transactions():
         ORDER BY t.date DESC""",conn)
     conn.close()
     return df
-    
+
+@st.cache_data(ttl=30)   
 def get_accounts():
     conn=get_connection()
     df=pd.read_sql("SELECT * FROM accounts",conn)
     conn.close()
     return df
 
+@st.cache_data(ttl=30)
 def get_categories():
     conn=get_connection()
     df=pd.read_sql("SELECT * FROM categories",conn)
     conn.close()
     return df
-    
+
+@st.cache_data(ttl=30)    
 def get_balance(account_id):
     conn=get_connection()
     accounts_df=pd.read_sql(
@@ -121,6 +125,7 @@ def get_balance(account_id):
     conn.close()
     return total_balance
 
+@st.cache_data(ttl=30)
 def get_spend_by_category():
     conn = get_connection()
     df = pd.read_sql("""
