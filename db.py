@@ -106,7 +106,7 @@ def get_categories():
 def get_balance(account_id):
     conn=get_connection()
     accounts_df=pd.read_sql(
-        "SELECT starting_balance FROM accounts where account_id=?",conn
+        "SELECT starting_balance FROM accounts where account_id=%s",conn
     ,params=(account_id,))
     
     starting_balance=accounts_df['starting_balance'].iloc[0]
