@@ -129,7 +129,7 @@ def get_spend_by_category():
             SUM(t.amount) AS total_spent
         FROM transactions t
         JOIN categories c ON t.category_id = c.category_id
-        WHERE t.type = 'spend'
+        WHERE t.type_ = 'spend'
         GROUP BY c.name
         ORDER BY total_spent
     """, conn)
