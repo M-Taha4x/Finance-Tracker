@@ -7,9 +7,10 @@ db.seed_accounts_and_categories()
 st.set_page_config(page_title="My Finance Tracker", page_icon="💰", layout="wide")
 def check_password():
     def password_entered():
-        if st.session_state['password']==st.secrets['app_password']:
+        if st.session_state.get('password')==st.secrets['app_password']:
             st.session_state['password_correct']=True
-            del st.session_state['password']
+            if 'password' in st.session_state:
+                del st.session_state['password']
         else:
             st.session_state['password_correct']=False
     
