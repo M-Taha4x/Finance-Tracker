@@ -62,6 +62,7 @@ with tab2:
         #st.write("DEBUG category_id:", category_id, type(category_id))
     
             db.insert_transaction(str(date), account_id, amount, type_, category_id, note)
+            st.cache_data.clear()
             st.success("Transaction Added!")
 with tab3:            
     st.subheader("Recent Transaction")
@@ -105,6 +106,7 @@ with tab3:
     if st.button("Delete Transaction"):
         if confirm:
             db.delete_transaction(int(transaction_id_to_delete))
+            st.cache_data.clear()
             st.success(f"Transaction {transaction_id_to_delete} deleted.")
         else:
             st.warning("Please check the confirmation box first.") 
