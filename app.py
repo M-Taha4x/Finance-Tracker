@@ -27,6 +27,7 @@ def check_password():
     
 if not check_password():
     st.stop()
+    
 account_df=db.get_accounts()
 categories_df=db.get_categories()
 st.title("Personal Finance Tracker")
