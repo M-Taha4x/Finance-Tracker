@@ -35,4 +35,4 @@
 * __Psycopg__
 ## Future Goals
 ### Direct Transfers between Online Accounts
-* Instead of doing it in two steps,it will be done in one step
+* __Instead of doing it in two steps,it will be done in one step__
