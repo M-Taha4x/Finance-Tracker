@@ -35,4 +35,7 @@
 * __Psycopg__
 ## Future Goals
 ### Direct Transfers between Online Accounts
-* __Instead of doing it in two steps,it will be done in one step__
+* __Instead of doing it in two steps,it will be done in one step(Completed)__
+* __1. Can't type negative on mobile__
+* __2. Monthly spend by category (chart + numbers)__
+* __3. Auto-updating from SMS/email bank alerts__
