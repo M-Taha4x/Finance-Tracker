@@ -43,7 +43,7 @@ with tab1:
 with tab2:
     st.subheader("Add Transaction")
     
-    type_ = st.selectbox("Type", ['spend', 'income', 'transfer', 'loan_given', 'loan_repaid'])
+    type_ = st.selectbox("Type", ['spend', 'pocket money', 'transfer', 'loan_given', 'loan_repaid'])
     
     if type_ == 'transfer':
         st.write("Transfer Between Accounts")
