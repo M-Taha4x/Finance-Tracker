@@ -149,18 +149,18 @@ def delete_transaction(transaction_id):
     curr.close()
     conn.close()
 
-def insert_transfer(date,from_account_id,to_account_id,amount,note):
-    conn=get_connection()
-    cur=conn.cursor()
+def insert_transfer(date, from_account_id, to_account_id, amount, note):
+    conn = get_connection()
+    cur = conn.cursor()
     cur.execute(
-    """Insert into transactions(date,account_id,amount,type_,category_id,note)
-        Values(%s,%s,%s,%s,NULL,note)""",
-        (date,from_account_id,-amount,'transfer',note)
+        """INSERT INTO transactions (date, account_id, amount, type_, category_id, note)
+           VALUES (%s, %s, %s, %s, NULL, %s)""",
+        (date, from_account_id, -amount, 'transfer', note)
     )
     cur.execute(
-        """Insert into transactions (date,account_id,amount,type_,category_id,note)
-            Values(%s,%s,%s,%s,NULL,%s)""",
-            (date,to_account_id,amount,'transfer',note)
+        """INSERT INTO transactions (date, account_id, amount, type_, category_id, note)
+           VALUES (%s, %s, %s, %s, NULL, %s)""",
+        (date, to_account_id, amount, 'transfer', note)
     )
     conn.commit()
     cur.close()
