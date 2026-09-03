@@ -153,9 +153,14 @@ def insert_transfer(date,from_account_id,to_account_id,amount,note):
     conn=get_connection()
     cur=conn.cursor()
     cur.execute(
-        """Insert into transactions (date,from_account_id,amount,type_,category_id,note)
+    """Insert into transactions(date,account_id,amount,type_,category_id,note)
+        Values(%s,%s,%s,%s,NULL,note)""",
+        (date,from_account_id,-amount,'transfer',note)
+    )
+    cur.execute(
+        """Insert into transactions (date,account_id,amount,type_,category_id,note)
             Values(%s,%s,%s,%s,NULL,%s)""",
-            (date,from_account_id,-amount,'transfer',note)
+            (date,to_account_id,amount,'transfer',note)
     )
     conn.commit()
     cur.close()
