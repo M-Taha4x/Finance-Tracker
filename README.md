@@ -29,6 +29,7 @@
 ![Download(csv & excel) and Delete](Images/download_dlt.png)
 ### Direct Transfers between Online Accounts
 * __Transfer from one Online account to another.__
+* __Transfer updated section included,where I have to enter from which account I transfered my money to which account__
 ## Technologies Used
 * __Pandas__
 * __Streamlit__
