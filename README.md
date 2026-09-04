@@ -27,6 +27,8 @@
 ![Graph by Category(Spend)](Images/Spend_by_Category.png)
 * __Transaction Management: Allows adding, viewing, downloading, and deleting records by transaction ID.__
 ![Download(csv & excel) and Delete](Images/download_dlt.png)
+### Direct Transfers between Online Accounts
+* __Transfer from one Online account to another.__
 ## Technologies Used
 * __Pandas__
 * __Streamlit__
@@ -34,8 +36,6 @@
 * __Supabase__
 * __Psycopg__
 ## Future Goals
-### Direct Transfers between Online Accounts
-* __Instead of doing it in two steps,it will be done in one step(Completed)__
 * __1. Can't type negative on mobile__
 * __2. Monthly spend by category (chart + numbers)__
 * __3. Auto-updating from SMS/email bank alerts__
